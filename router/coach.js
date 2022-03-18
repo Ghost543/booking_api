@@ -53,7 +53,7 @@ router.post("/book", async(req, res) => {
     const {number} = req.body
     if (number === 0 || number > 7) {
         return res.status(400).json({
-            msg: "NUmber of seats should be greater than 0"
+            msg: "Invalid Input"
         })
     }
 
