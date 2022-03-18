@@ -30,7 +30,7 @@ router.get("/seats", async(req,res) => {
 
 
 const validId = async (n) => {
-    const validfields = await coach.findMany({
+    validfields = await coach.findMany({
         select: {
             id: true,
             Seat: true
@@ -50,16 +50,19 @@ const validId = async (n) => {
 
 
 const booking = async (number) => {
-    const seats = [] 
+    const seats = []
+
+    const valid_seats = await validId(number)
     for (let index = 0; index < number; index++) {
-        seats.push(await coach.update({
+       let seat = await coach.update({
             where: {
-                id: await validId(number)[index]
+                id: valid_seats[index]
             },
             data: {Status: false}
         })
-)
-      
+
+        seats.push(seat)
+        
     }
 }
 
@@ -70,8 +73,8 @@ router.post("/book", async(req, res) => {
             msg: "Invalid Input"
         })
     } 
-
-    res.status(200).json(await booking(number))
+    const seats = await booking(number)
+    res.status(200).json(seats)
 })
 
 module.exports = router
