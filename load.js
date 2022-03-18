@@ -1,7 +1,1 @@
-const { PrismaClient } = require('@prisma/client')
-
-const {coach} = new PrismaClient()
-
-
-
-(await newFunction())
+"https://git.heroku.com/booking-api543.git"
