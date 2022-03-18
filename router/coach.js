@@ -64,6 +64,7 @@ const booking = async (number) => {
         seats.push(seat)
         
     }
+    return seats
 }
 
 router.post("/book", async(req, res) => {
