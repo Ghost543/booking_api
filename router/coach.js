@@ -40,7 +40,9 @@ const validId = async (n) => {
         }
     })
     valid_seats = []
-
+    if (validfields < n) {
+        return "Cannot Create seats befitting of your request."
+    }
     for (let index = 0; index < n; index++) {
         valid_seats.push(validfields[index].id)
         
@@ -53,6 +55,9 @@ const booking = async (number) => {
     const seats = []
 
     const valid_seats = await validId(number)
+    if (typeof valid_seats === "string") {
+        return valid_seats
+    }
     for (let index = 0; index < number; index++) {
        let seat = await coach.update({
             where: {
@@ -75,6 +80,9 @@ router.post("/book", async(req, res) => {
         })
     } 
     const seats = await booking(number)
+    if (typeof seats === "string") {
+        return res.status(400).json({msg: seats})
+    }
     res.status(200).json(seats)
 })
 
